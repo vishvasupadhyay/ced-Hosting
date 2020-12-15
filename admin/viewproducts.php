@@ -1,9 +1,26 @@
 <?php 
 session_start();
+include('../classes/Product.php');
 if (!isset($_SESSION['id'])) {
   header("location: ../login.php");
+} elseif(isset($_SESSION['id'])){
+    if($_SESSION['is_admin'] == '0') {
+        header("location:../index.php");
+    }
 }
-include_once('header.php');?>
+$product = new Product();
+$db = new Dbcon();
+if(isset($_POST['submit'])) {
+    $subcategory = $_POST['subcategory'];
+    $insert = $product->insert_subcategory($subcategory, $db->conn);
+}
+if(isset($_GET['delete'])) {
+  $id = $_GET['id'];
+  $delete = $product->delete_product($id, $db->conn);
+}
+?>
+  
+<?php include_once('header.php');?>
   <!-- Main content -->
   <div class="main-content" id="panel">
     <!-- Topnav -->
@@ -135,7 +152,8 @@ include_once('header.php');?>
                         <img alt="Image placeholder" src="assets/img/theme/team-5.jpg" class="avatar rounded-circle">
                       </div>
                       <div class="col ml--2">
-                        <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex justify-content-between align-Enter Product Name *
+￼This field is required.items-center">
                           <div>
                             <h4 class="mb-0 text-sm">John Snow</h4>
                           </div>
@@ -206,7 +224,7 @@ include_once('header.php');?>
                     <img alt="Image placeholder" src="assets/img/theme/team-4.jpg">
                   </span>
                   <div class="media-body  ml-2  d-none d-lg-block">
-                    <span class="mb-0 text-sm  font-weight-bold">John Snow</span>
+                    <span class="mb-0 text-sm  font-weight-bold"><?php echo 'admin';?></span>
                   </div>
                 </div>
               </a>
@@ -248,12 +266,12 @@ include_once('header.php');?>
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-              <h6 class="h2 text-white d-inline-block mb-0">Google maps</h6>
+              <h6 class="h2 text-white d-inline-block mb-0">Create Category</h6>
               <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                   <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                  <li class="breadcrumb-item"><a href="#">Maps</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Google maps</li>
+                  <li class="breadcrumb-item"><a href="#">Products</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Create Category</li>
                 </ol>
               </nav>
             </div>
@@ -267,11 +285,97 @@ include_once('header.php');?>
     </div>
     <!-- Page content -->
     <div class="container-fluid mt--6">
+      <!-- SubCategory Table -->
       <div class="row">
         <div class="col">
-          <div class="card border-0">
-            <div id="map-default" class="map-canvas" data-lat="40.748817" data-lng="-73.985428" style="height: 600px;"></div>
-          </div>
+            <div class="card bg-default shadow">
+                <div class="text-center card-header border-0">
+                    <h2 class="text-primary mb-0">View Product</h2>
+                </div>
+                <div class="table-responsive table-light">
+              <table id="subcat" class="table align-items-center table-flush">
+                <thead class="text-dark">
+                  <tr>
+                    <th scope="col" class="sort" data-sort="name">Prod Parent Name</th>
+                    <th scope="col" class="sort" data-sort="budget">Product Name</th>
+                    <th scope="col" class="sort" data-sort="completion">Monthly Price</th>
+                    <th scope="col" class="sort" data-sort="completion">Annual Price</th>
+                    <th scope="col" class="sort" data-sort="completion">SKU</th>
+                    <th scope="col" class="sort" data-sort="status">Web Spaces</th>
+                    <th scope="col" class="sort" data-sort="status">Bandwidth</th>
+                    <th scope="col" class="sort" data-sort="status">Domain</th>
+                    <th scope="col" class="sort" data-sort="status">Language</th>
+                    <th scope="col" class="sort" data-sort="status">Mailbox</th>
+                    <th scope="col" class="sort" data-sort="completion">Action</th>
+                  </tr>
+                </thead>
+                <tbody class="list">
+                   <?php 
+                        $products = $product->select_product($db->conn);
+                        if($product == '0'){
+                            ?>
+                                <tr>
+                                    <td colspan="7">No Data Avaialble</td>
+                                </tr>
+                            <?php
+                        } else {
+                            foreach($products as $pro) {
+                                $data = json_decode($pro['description']);
+                                ?>
+                                    <tr>
+                                        <td>
+                                            <?php 
+                                                $prodParent = $product->select_parentname($pro['prod_parent_id'], $db->conn);
+                                                if($prodParent == '0') {
+                                                    echo "No Parent";
+                                                } else {
+                                                    foreach($prodParent as $prod) {
+                                                        echo $prod['prod_name'];
+                                                    }
+                                                }
+                                            ?>
+                                        </td>
+                                        <td><?php echo $pro['prod_name']; ?></td>
+                                        <td><?php echo $pro['mon_price']; ?> INR</td>
+                                        <td><?php echo $pro['annual_price']; ?> INR</td>
+                                        <td><?php echo $pro['sku']; ?></td>
+                                        <td><?php echo $data->webspaces; ?> GB</td>
+                                        <td><?php echo $data->bandwidth;?> GB</td>
+                                        <td><?php echo $data->domain; ?></td>
+                                        <td><?php echo $data->language; ?></td>
+                                        <td><?php echo $data->mailbox; ?></td>
+                                        <td>
+                                        <a onclick='return confirm("Are you sure, you want to Edit?")'  href="editcategory.php?update=1&id=<?php echo $item['id']; ?>" class="btn btn-success btn-sm">Edit</a>
+                                        <a onclick='return confirm("Are you sure, you want to Delete?")'  href="viewproducts.php?delete=1&id=<?php echo $pro['prod_id']; ?>" class="btn btn-danger btn-sm">Delete</a>
+                                        </td>
+                                    </tr>
+                                <?php
+                            }
+                        }
+                   ?>
+                </tbody>
+              </table>
+            </div>
+            </div>
         </div>
-      </div>
+    </div>
+     <script>
+      function changeStatus($id) {
+        $.ajax({
+        method : "POST",
+        url : "ajax.php",
+        data : {id : $id }
+      }).done(function(result){
+        console.log(result);
+      });
+      }
+     </script>
 <?php include_once('footer.php');?>
+<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+<script>
+  $(function(){
+    $('#subcat').dataTable()
+  })
+  </script>   
+

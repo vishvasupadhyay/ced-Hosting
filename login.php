@@ -46,16 +46,7 @@
 									 <h3>new customers</h3>
 									 <p>By creating an account with our store, you will be able to move through the checkout process faster, store multiple shipping addresses, view and track your orders in your account and more.</p>
 									 <a class="acount-btn" href="account.php">Create an Account</a>
-									 <!-- <form action="login.php" method="POST" class="check">
-										<h3>Check Verification</h3>
-											<?php
-												if($error != "") {
-													echo "<p style='color:red;'>$error</p>";
-												}
-											?>
-											<input type="email" name="email" placeholder="Enter your email" required>
-											<input class="acount-btn" type="submit" value="Check" name="check">
-									 </form> -->
+									 
 								</div>
 								<div class="col-md-6 login-right">
 									<h3>registered</h3>

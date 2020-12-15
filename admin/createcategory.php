@@ -364,7 +364,7 @@ if(isset($_GET['delete'])) {
                                             }
                                         ?>
                                     </td>
-                                    <td><?php echo $item['prod_name']; ?></td>
+                                          View Product    <td><?php echo $item['prod_name']; ?></td>
                                    
                                     <td><?php echo $item['prod_launch_date']; ?></td>
                                     <td>

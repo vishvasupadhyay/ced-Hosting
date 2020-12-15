@@ -233,6 +233,7 @@ a:not([href])
     text-decoration: none; 
 
     color: inherit;
+
 }
 a:not([href]):hover
 {

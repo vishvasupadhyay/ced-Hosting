@@ -103,16 +103,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <li class="dropdown <?php if($link == 'Hosting' ) { echo 'active'; }?>">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hosting<i class="caret"></i></a>
                                     <ul class="dropdown-menu">
-										<?php 
+										 <?php 
 											$data = $product->select_subcategory($db->conn);
 											if($data != '0') {
 												foreach($data as $item) {
 													?>
-														<li><a href="<?php echo $item['link']; ?>"><?php echo $item['prod_name']; ?></a></li>
+														<li><a href="catpage.php?id=<?php echo $item['id']; ?>"><?php echo $item['prod_name']; ?></a></li>
 													<?php
 												}
 											}
-										?>
+										?> 
                                     </ul>
                                 </li>
                                 <li <?php if($link == "pricing.php") { echo 'class="active"'; }?>><a href="pricing.php">Pricing</a></li>

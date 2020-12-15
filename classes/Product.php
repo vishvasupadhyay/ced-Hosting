@@ -17,9 +17,9 @@ class Product {
     }
 
     function insert_subcategory($subcategory, $conn) {
-        $link = str_replace(" ","",strtolower($subcategory));
-        $link = $link.".php";
-        $sql = "INSERT INTO `tbl_product`(`prod_parent_id`, `prod_name`, `link`, `prod_available`, `prod_launch_date`) VALUES('1', '$subcategory', '$link', '1', NOW())";
+        $html = str_replace(" ","",strtolower($subcategory));
+        $html = $html.".php";
+        $sql = "INSERT INTO `tbl_product`(`prod_parent_id`, `prod_name`, `html`, `prod_available`, `prod_launch_date`) VALUES('1', '$subcategory', '$html', '1', NOW())";
         $run = mysqli_query($conn, $sql);
         if($run == 1) {
             echo "<script>alert('SubCategory Added Successfully');window.location.href = 'createcategory.php';</script>";
@@ -75,7 +75,7 @@ class Product {
 
     function insert_product($category, $productname, $pageurl, $monthlyprice, $annualprice, $sku, $featuresEncoded, $conn){
 
-        $prodQuery = mysqli_query($conn, "INSERT INTO `tbl_product`(`prod_parent_id`, `prod_name`, `link`, `prod_available`, `prod_launch_date`) VALUES ('$category', '$productname', '$pageurl', '1', NOW())");
+        $prodQuery = mysqli_query($conn, "INSERT INTO `tbl_product`(`prod_parent_id`, `prod_name`, `html`, `prod_available`, `prod_launch_date`) VALUES ('$category', '$productname', '$pageurl', '1', NOW())");
         $id = mysqli_insert_id($conn);
         if($prodQuery){
             $DescQuery = mysqli_query($conn, "INSERT INTO `tbl_product_description`(`prod_id`, `description`, `mon_price`, `annual_price`, `sku`) VALUES ('$id', '$featuresEncoded', '$monthlyprice', '$annualprice', '$sku')");
@@ -90,6 +90,45 @@ class Product {
         }
         
     }
+    function select_product($conn) {
+        $sql = mysqli_query($conn, "SELECT * FROM `tbl_product_description` INNER JOIN `tbl_product` ON tbl_product_description.prod_id = tbl_product.id");
+        $rows = mysqli_num_rows($sql);
+        if($rows>0) {
+            return $sql;
+        } else {
+            return '0';
+        }
+        function insert_product($category, $productname, $pageurl, $monthlyprice, $annualprice, $sku, $featuresEncoded, $conn){
+
+        $prodQuery = mysqli_query($conn, "INSERT INTO `tbl_product`(`prod_parent_id`, `prod_name`, `html`, `prod_available`, `prod_launch_date`) VALUES ('$category', '$productname', '$pageurl', '1', NOW())");
+        $id = mysqli_insert_id($conn);
+        if($prodQuery){
+            $DescQuery = mysqli_query($conn, "INSERT INTO `tbl_product_description`(`prod_id`, `description`, `mon_price`, `annual_price`, `sku`) VALUES ('$id', '$featuresEncoded', '$monthlyprice', '$annualprice', '$sku')");
+            if($DescQuery) {
+                echo "<script>alert('Product Inserted successfully');</script>";
+                echo "<script>window.location.href = 'addproduct.php'; </script>";
+            } else {
+                echo mysqli_error($conn);
+            }
+            echo "<script>alert('Product Deleted successfully');</script>";
+            echo "<script>window.location.href = 'viewproducts.php'; </script>";
+        } else {
+            echo "<script>alert('Some error occured!'); window.location.href = admin/viewproducts.php;</script>";
+        }
+    }
+     }
+    function select_product1($id,$conn){
+            $sql= "SELECT * FROM tbl_product Where id='".$id."'";
+             $run = mysqli_query($conn, $sql);
+                $rows = mysqli_num_rows($run);
+                if($rows>0) {
+                    return $run;
+                } else {
+                    return '0';
+                }
+
+            }
+   
 }
 
 ?>

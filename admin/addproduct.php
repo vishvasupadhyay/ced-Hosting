@@ -303,7 +303,7 @@ if(isset($_POST['submit'])) {
                 <form action="addproduct.php" method="post">
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Select Category <span style="color:red">*</span></label>
-                        <select class="form-control" name="category" id="category">
+                        <select class="form-control select" name="category" >
                             <option value="">Select Product Category</option>
                             <?php 
                                 $sql = $product->select_subcategory($db->conn);
@@ -317,13 +317,16 @@ if(isset($_POST['submit'])) {
                             ?>
                         </select>
                     </div>
+                    <p id="productcategory"></p>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Enter Product Name <span style="color:red">*</span></label>
-                        <input type="text" class="form-control" name="productname" pattern='^([A-Za-z]+ )+[A-Za-z]+$|^[A-Za-z]+$' id="productname" required placeholder="Add Product Name">
+                        <input type="text" class="form-control productname" name="productname" pattern="(^([A-z]+\-[0-9]+)$)|(^([A-z])+$)"  class="productname" required placeholder="Add Product Name">
                     </div>
+                      <p id="productname"></p>
+                    
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Page Url <span style="color:red">*</span></label>
-                        <input type="url" class="form-control" name="pageurl" placeholder="Add Page Url">
+                        <input type="url" class="form-control" name="pageurl" placeholder="Add Page Url" id="urlid">
                     </div>
 
                     <hr>
@@ -335,18 +338,21 @@ if(isset($_POST['submit'])) {
                     <br>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Enter Monthly Price <span style="color:red">*</span></label>
-                        <input type="text" class="form-control" name="monthlyprice" id="monthlyprice" required placeholder="ex. 23">
+                        <input type="number" class="form-control mpriceid" name="monthlyprice"  pattern="\d{1,15}"     required placeholder="ex. 23">
                         <small>This would be monthly plan</small>
                     </div>
+                    <p id="lablemprice"></p>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Enter Annual Price <span style="color:red">*</span></label>
-                        <input type="text" class="form-control" name="annualprice" id="annualprice" required placeholder="ex. 23">
+                        <input type="number" class="form-control apriceid" name="annualprice"   required placeholder="ex. 23">
                         <small>This would be Annual plan</small>
                     </div>
+                    <p id="lableaprice"></p>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">SKU <span style="color:red">*</span></label>
-                        <input type="text" class="form-control" name="sku" id="sku" required placeholder="">
+                        <input type="text" class="form-control sku" name="sku"   pattern="^[a-zA-Z0-9#](?:[a-zA-Z0-9_-]*[a-zA-Z0-9])?$" required placeholder="">
                     </div>
+                    <p id="sku"></p>
 
                     <hr>
 
@@ -356,19 +362,22 @@ if(isset($_POST['submit'])) {
                     <br>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Web Spaces(in GB) <span style="color:red">*</span></label>
-                        <input type="text" class="form-control" name="webspaces">
+                        <input type="text" class="form-control webid" name="webspaces"   pattern='([0-9]+(\.[0-9]+)?)'>
                         <small>Enter 0.5 for 512 MB</small>
                     </div>
+                    <p id="lableweb"></p>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Bandwidth (in GB) <span style="color:red">*</span></label>
-                        <input type="text" class="form-control" name="bandwidth">
+                        <input type="text" class="form-control bandid" name="bandwidth"   pattern="([0-9]+(\.[0-9]+)?)">
                         <small>Enter 0.5 for 512 MB</small>
                     </div>
+                    <p id="lableband"></p>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Free Domain <span style="color:red">*</span></label>
-                        <input type="text" class="form-control" name="domain">
+                        <input type="text" class="form-control domainid" name="domain"   pattern="((^[0-9]*$)|(^[A-Za-z]+$))">
                         <small>Enter 0 if no domain available in this service</small>
                     </div>
+                    <p id="labledomain"></p>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Language/Technology Supporty <span style="color:red">*</span></label>
                         <input type="text" class="form-control" name="language">
@@ -376,7 +385,7 @@ if(isset($_POST['submit'])) {
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Mailbox <span style="color:red">*</span></label>
-                        <input type="text" class="form-control" name="mailbox">
+                        <input type="text" class="form-control" name="mailbox" pattern="((^[0-9]*$)|(^[A-Za-z]+$))">
                         <small>Enter Number of mailbox will be provided, enter 0 if none</small>
                     </div>
                     <div class="form-group">
@@ -426,8 +435,8 @@ if(isset($_POST['submit'])) {
                                             if($parentname == '0') {
                                                 echo "Null";
                                             } else {
-                                                foreach($parentname as $pname) {
-                                                    echo $pname['prod_name'];
+                                                foreach($parentname as $productname) {
+                                                    echo $productname['prod_name'];
                                                 } 
                                             }
                                         ?>
@@ -440,7 +449,6 @@ if(isset($_POST['submit'])) {
                             <?php
                         }
                     }
-
                   ?>
                 </tbody>
               </table>
@@ -452,9 +460,9 @@ if(isset($_POST['submit'])) {
 <?php include_once('footer.php');?>
 <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
   <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+
 <script>
   $(function(){
     $('#subcat').dataTable()
-  })
-  </script>   
-
+  });
+</script>   
