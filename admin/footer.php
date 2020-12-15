@@ -44,11 +44,14 @@
     if ($category == "" || $category== null) {
         $("#productcategory").html("*Select Category");
         $("#productcategory").show();
+        $("#submit10").attr("disabled",true)
         $(this).css('border', 'solid 3px red');
     } else {
         $("#prodCategory").hide();
-        $(this).css('border', 'solid 3px green');
+        $(this).css('border', 'solid 2px green');
+        $("#submit10").attr("disabled",false)
     }
+    
 });
 
 $(".productname").focusout(function() {
@@ -58,19 +61,24 @@ $(".productname").focusout(function() {
     if ($productname == "" || $productname == null) {
         $("#productname").html("*Enter Product Name");
         $("#productname").show();
+        $("#submit10").attr("disabled",true)
         $(this).css('border', 'solid 3px red');
     } else if (!$productname.match(/^[a-zA-Z0-9]+( [a-zA-Z0-9]+)*$/)) {
         $("#productname").html("*Product Name can be alpha-numeric/only alphabetic and one space between words allowed");
         $("#productname").show();
+        $("#submit10").attr("disabled",true)
         $(this).css('border', 'solid 3px red');
     } else if (Number.isInteger(ans2)) {
         $("#productname").html("*Product Name can be alpha-numeric/only alphabetic and one space between words allowed");
         $("#productname").show();
+        $("#submit10").attr("disabled",true)
         $(this).css('border', 'solid 3px red');
     } else {
         $("#productname").hide();
-        $(this).css('border', 'solid 3px green');
+        $(this).css('border', 'solid 2px green');
+         $("#submit10").attr("disabled",false)
     }
+
 });
 
 
@@ -82,19 +90,24 @@ $(".mpriceid").focusout(function() {
     if ($mprice == "" || $mprice == 0) {
         $("#lablemprice").html("*Enter Monthly Price");
         $("#lablemprice").show();
+        $("#submit10").attr("disabled",true)
         $(this).css('border', 'solid 3px red');
     } else if (!$mprice.match(/^[0-9]\d*(\.\d+)?$/)) {
         $("#lablemprice").html("*Price can be only integer and only one dot(.) allowed");
         $("#lablemprice").show();
+        $("#submit10").attr("disabled",true)
         $(this).css('border', 'solid 3px red');
     } else if ($first == 0 && $second == 0) {
         $("#lablemprice").html("*In starting you cant have two zero");
         $("#lablemprice").show();
+        $("#submit10").attr("disabled",true)
         $(this).css('border', 'solid 3px red');
     } else {
         $("#lablemprice").hide();
-        $(this).css('border', 'solid 3px green');
+        $(this).css('border', 'solid 2px green');
+         $("#submit10").attr("disabled",false)
     }
+   
   })
 
 
@@ -105,18 +118,22 @@ $(".apriceid").focusout(function() {
     if ($aprice == "" || $aprice == 0) {
         $("#lableaprice").html("*Enter annual Price");
         $("#lableaprice").show();
+        $("#submit10").attr("disabled",true)
         $(this).css('border', 'solid 3px red');
     } else if (!$aprice.match(/^[0-9]\d*(\.\d+)?$/)) {
         $("#lableaprice").html("*Price can be only integer and only one dot(.) allowed");
         $("#lableaprice").show();
+        $("#submit10").attr("disabled",true)
         $(this).css('border', 'solid 3px red');
     } else if ($first == 0 && $second == 0) {
         $("#lableaprice").html("*In starting you cant have two zero");
         $("#lableaprice").show();
+        $("#submit10").attr("disabled",true)
         $(this).css('border', 'solid 3px red');
     } else {
         $("#lableaprice").hide();
-        $(this).css('border', 'solid 3px green');
+        $(this).css('border', 'solid 2px green');
+         $("#submit10").attr("disabled",false)
     }
 })
 
@@ -125,15 +142,19 @@ $(".sku").focusout(function() {
     if ($sku == "" || $sku == null) {
         $("#sku").html("*Enter SKU");
         $("#sku").show();
+        $("#submit10").attr("disabled",true)
         $(this).css('border', 'solid 3px red');
-    } else if (!$sku.match(/^(?=.*\d)(?=.*[a-zA-Z])(?=.*[#-]).{1,}$/)) {
+    } else if (!$sku.match(/^[a-zA-Z0-9#](?:[a-zA-Z0-9_-]*[a-zA-Z0-9])?$/)) {
         $("#sku").html("*SKU can be combination of Alphanumeric/specail character Not only Special character");
         $("#sku").show();
+        $("#submit10").attr("disabled",true)
         $(this).css('border', 'solid 3px red');
     } else {
         $("#sku").hide();
-        $(this).css('border', 'solid 3px green');
+        $(this).css('border', 'solid 2px green');
+         $("#submit10").attr("disabled",false)
     }
+    
 });
 
 $(".webid").focusout(function() {
@@ -143,19 +164,24 @@ $(".webid").focusout(function() {
     if ($web == "" || $web == 0) {
         $("#lableweb").html("*Enter web space.");
         $("#lableweb").show();
+        $("#submit10").attr("disabled",true)
         $(this).css('border', 'solid 3px red');
     } else if (!$web.match(/^[0-9]\d*(\.\d+)?$/)) {
         $("#lableweb").html("*Web Space can be only integer and only one dot(.) allowed");
         $("#lableweb").show();
+        $("#submit10").attr("disabled",true)
         $(this).css('border', 'solid 3px red');
     } else if ($first == 0 && $second == 0) {
         $("#lableweb").html("*In starting you cant have two zero");
         $("#lableweb").show();
+        $("#submit10").attr("disabled",true)
         $(this).css('border', 'solid 3px red');
     } else {
         $("#lableweb").hide();
-        $(this).css('border', 'solid 3px green');
+        $(this).css('border', 'solid 2px green');
+         $("#submit10").attr("disabled",false)
     }
+    
 })
 
 
@@ -167,57 +193,142 @@ $(".bandid").focusout(function() {
     if ($band == "" || $band == 0) {
         $("#lableband").html("*Enter  bandwidth.");
         $("#lableband").show();
+        $("#submit10").attr("disabled",true);
         $(this).css('border', 'solid 3px red');
     } else if (!$band.match(/^[0-9]\d*(\.\d+)?$/)) {
         $("#lableband").html("*Bandwidth can be only integer and only one dot(.) allowed");
         $("#lableband").show();
+        $("#submit10").attr("disabled",true);
         $(this).css('border', 'solid 3px red');
     } else if ($first == 0 && $second == 0) {
         $("#lableband").html("*In starting you cant have two zero");
         $("#lableband").show();
+        $("#submit10").attr("disabled",true);
         $(this).css('border', 'solid 3px red');
     } else {
         $("#lableband").hide();
-        $(this).css('border', 'solid 3px green');
+        $(this).css('border', 'solid 2px green');
+         $("#submit10").attr("disabled",false)
     }
+ 
 })
 
 
 $(".domainid").focusout(function() {
-    $domain = $(".domainid").val();
-     $first = $band.substr(0, 1);
-    // $second = $band.substr(1, 1);
-    if ($domain == "" || $domain == null) {
-        $("#labledomain").html("*Enter  No of domain.");
-        $("#labledomain").show();
-        $(this).css('border', 'solid 3px red');
-    } else if (!$domain.match(/^[0-9]\d*?$/)) {
-        $("#labledomain").html("*Domain can be only Numeric and dot(.) not allowed");
-        $("#labledomain").show();
-        $(this).css('border', 'solid 3px red');
-    } else {
-        $("#labledomain").hide();
-        $(this).css('border', 'solid 3px green');
-    }
+$profree = $("#profree").val();
+$first=$profree.substr(0,1);
+console.log($first);
+
+if($first.match(/^[a-zA-Z]+$/))
+{
+$pattern=/^[a-zA-Z]+$/;
+}
+else if($first.match(/^[0-9]+$/))
+{
+$pattern=/^[0-9]+$/;
+}
+if ($profree == "") {
+$("#prodfree").html("*Select Free Domain as 0 if not required");
+$("#prodfree").show();
+$("#submit10").attr("disabled",true);
+
+$(this).css('border', 'solid 3px red');
+count7=0;
+}
+else if(!$profree.match($pattern))
+{
+$("#prodfree").html("*Select Valid Free Domain");
+$("#prodfree").show();
+$("#submit10").attr("disabled",true);
+
+$(this).css('border', 'solid 3px red');
+count7=0;
+}
+
+
+
+
+else {
+
+$("#prodfree").hide();
+$(this).css('border', 'solid 2px green');
+count7=1;
+$("#submit10").attr("disabled",false)
+}
+});
+
+
+$(".prolang").focusout(function() {
+$prolang = $("#prolang").val();
+if ($prolang == "") {
+$("#prodlang").html("*Select lang Space in G.B");
+$("#prodlang").show();
+$("#submit10").attr("disabled",true);
+
+$(this).css('border', 'solid 3px red');
+count8=0;
+}
+else if(!$prolang.match(/^[a-zA-Z ,]+[a-zA-Z]+$/))
+{
+$("#prodlang").html("*Select Valid language");
+$("#prodlang").show();
+$("#submit10").attr("disabled",true);
+
+$(this).css('border', 'solid 3px red');
+count8=0;
+}
+
+else {
+
+$("#prodlang").hide();
+$(this).css('border', 'solid 2px green');
+count8=1;
+ $("#submit10").attr("disabled",false)
+}
+
+
 
 });
 
 
+$(".promail").focusout(function() {
+$promail = $("#promail").val();
+if ($promail == "") {
+$("#prodmail").html("*Select Mail");
+$("#prodmail").show();
+$("#submit10").attr("disabled",true);
+
+$(this).css('border', 'solid 3px red');
+count9=0;
+}
+else if(!$promail.match(/^[0-9]+$/))
+{
+$("#prodmail").html("*Select Valid Mail box");
+$("#prodmail").show();
+$("#submit10").attr("disabled",true);
+
+$(this).css('border', 'solid 3px red');
+count9=0;
+}
+
+
+
+else {
+
+$("#prodmail").hide();
+$(this).css('border', 'solid 2px green');
+count9=1;
+ $("#submit10").attr("disabled",false)
+
+}
 
 
 
 
+});
 
 
-
-
-
-
-   
-
-   
-
-  </script>
+</script>
 </body>
 
 </html>

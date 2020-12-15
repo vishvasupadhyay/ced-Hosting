@@ -49,7 +49,7 @@ include('header.php'); ?>
 				 <div class="register-top-grid">
 					 <?php
 					 	if($error != "") {
-							 echo "<p style='color:red;'>$error</p>";
+							 echo "<p  style='color:red; text-align:center;'>$error</p>";
 						 }
 					 ?>
 					<h3>personal information</h3>

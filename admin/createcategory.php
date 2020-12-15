@@ -223,7 +223,7 @@ if(isset($_GET['delete'])) {
                     <img alt="Image placeholder" src="assets/img/theme/team-4.jpg">
                   </span>
                   <div class="media-body  ml-2  d-none d-lg-block">
-                    <span class="mb-0 text-sm  font-weight-bold"><?php echo 'admin'; ?></span>
+                    <span class="mb-0 text-sm  font-weight-bold"><?php echo $_SESSION ['name']; ?></span>
                   </div>
                 </div>
               </a>
@@ -325,7 +325,7 @@ if(isset($_GET['delete'])) {
       <div class="row">
         <div class="col">
             <div class="card bg-default shadow">
-                <div class="text-center card-header bg-primary border-0">
+                <div class="text-center card-header bg-primary border-0"><span  style="color: black;font-size: 26px;">View Category</span>
                     <!-- <h3 class="text-white mb-0">All SubCategory</h3> -->
                 </div>
                 <div class="table-responsive table-light">
@@ -364,7 +364,7 @@ if(isset($_GET['delete'])) {
                                             }
                                         ?>
                                     </td>
-                                          View Product    <td><?php echo $item['prod_name']; ?></td>
+                                             <td><?php echo $item['prod_name']; ?></td>
                                    
                                     <td><?php echo $item['prod_launch_date']; ?></td>
                                     <td>

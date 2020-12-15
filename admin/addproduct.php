@@ -231,7 +231,7 @@ if(isset($_POST['submit'])) {
                     <img alt="Image placeholder" src="assets/img/theme/team-4.jpg">
                   </span>
                   <div class="media-body  ml-2  d-none d-lg-block">
-                    <span class="mb-0 text-sm  font-weight-bold"><?php echo "admin"; ?></span>
+                    <span class="mb-0 text-sm  font-weight-bold"><?php echo $_SESSION ['name']; ?></span>
                   </div>
                 </div>
               </a>
@@ -374,22 +374,24 @@ if(isset($_POST['submit'])) {
                     <p id="lableband"></p>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Free Domain <span style="color:red">*</span></label>
-                        <input type="text" class="form-control domainid" name="domain"   pattern="((^[0-9]*$)|(^[A-Za-z]+$))">
+                        <input type="text" class="form-control domainid" name="domain" id="profree"  >
                         <small>Enter 0 if no domain available in this service</small>
                     </div>
-                    <p id="labledomain"></p>
+                    <p id="prodfree"></p>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Language/Technology Supporty <span style="color:red">*</span></label>
-                        <input type="text" class="form-control" name="language">
+                        <input type="text" class="form-control prolang" name="language" id="prolang">
                         <small>Separate by (,) Ex: PHP, MySQL, MongoDB</small>
                     </div>
+                    <p id="prodlang"></p>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Mailbox <span style="color:red">*</span></label>
-                        <input type="text" class="form-control" name="mailbox" pattern="((^[0-9]*$)|(^[A-Za-z]+$))">
+                        <input type="text" class="form-control promail" name="mailbox" id="promail">
                         <small>Enter Number of mailbox will be provided, enter 0 if none</small>
                     </div>
+                    <p id="prodmail"></p>
                     <div class="form-group">
-                        <input type="submit" class="btn btn-primary" value="Add Product" name="submit">
+                        <input type="submit" class="btn btn-primary" value="Add Product" name="submit" id="submit10">
                     </div>
                 </form>
             </div>
@@ -398,64 +400,7 @@ if(isset($_POST['submit'])) {
         <div class="col-md-2 col-lg-2"></div>
       </div>
 
-      <!-- SubCategory Table -->
-      <!-- <div class="row">
-        <div class="col">
-            <div class="card bg-default shadow">
-                <div class="text-center card-header bg-primary border-0">
-                    <h3 class="text-white mb-0">All SubCategory</h3>
-                </div>
-                <div class="table-responsive table-light">
-              <table id="subcat" class="table align-items-center table-flush">
-                <thead class="text-dark">
-                  <tr>
-                    <th scope="col" class="sort" data-sort="name">Category</th>
-                    <th scope="col" class="sort" data-sort="budget">SubCategory</th>
-                    <th scope="col" class="sort" data-sort="status">Status</th>
-                    <th scope="col" class="sort" data-sort="completion">Launch Date</th>
-                    <th scope="col" class="sort" data-sort="completion">Action</th>
-                  </tr>
-                </thead>
-                <tbody class="list">
-                  <?php
-                    $data = $product->select_subcategory($db->conn);
-                    if($data == '0') {
-                        ?>
-                            <tr>
-                                <td class="text-center">No data Available</td>
-                            </tr>
-                        <?php
-                    } else {
-                        foreach($data as $item) {
-                            $parentname = $product->select_parentname($item['prod_parent_id'], $db->conn);
-                            ?>
-                                <tr>
-                                    <td>
-                                        <?php
-                                            if($parentname == '0') {
-                                                echo "Null";
-                                            } else {
-                                                foreach($parentname as $productname) {
-                                                    echo $productname['prod_name'];
-                                                } 
-                                            }
-                                        ?>
-                                    </td>
-                                    <td><?php echo $item['prod_name']; ?></td>
-                                    <td><?php if($item['prod_available']=='1'){ echo 'Available'; } else { echo 'Unavailable'; } ?></td>
-                                    <td><?php echo $item['prod_launch_date']; ?></td>
-                                    <td><a href="#" class="btn btn-info btn-sm">Edit</a><a href="#" class="btn btn-danger btn-sm">Delete</a></td>
-                                </tr>
-                            <?php
-                        }
-                    }
-                  ?>
-                </tbody>
-              </table>
-            </div>
-            </div>
-        </div>
-    </div> -->
+      
      
 <?php include_once('footer.php');?>
 <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>

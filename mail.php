@@ -34,7 +34,7 @@ try {
 
     $mailer->isHTML(true);
     $mailer->Subject = 'Email Verification';
-    $mailer->Body = 'Hi, Please click the link to verify your email <a href="http://localhost/Training/cedHosting/verify.php?email='.md5($email).'">Click Here</a>';
+    $mailer->Body = 'Hi, Please click the link to verify your email <a href="http://localhost/Training/cedhosting/verify.php?email='.md5($email).'">Click Here</a>';
     $mailer->send();
     $mailer->ClearAllRecipients();
     echo "<script>alert('Email sent successfully.');</script>";

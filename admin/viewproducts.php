@@ -224,7 +224,7 @@ if(isset($_GET['delete'])) {
                     <img alt="Image placeholder" src="assets/img/theme/team-4.jpg">
                   </span>
                   <div class="media-body  ml-2  d-none d-lg-block">
-                    <span class="mb-0 text-sm  font-weight-bold"><?php echo 'admin';?></span>
+                    <span class="mb-0 text-sm  font-weight-bold"><?php echo $_SESSION ['name']; ?></span>
                   </div>
                 </div>
               </a>
@@ -290,7 +290,7 @@ if(isset($_GET['delete'])) {
         <div class="col">
             <div class="card bg-default shadow">
                 <div class="text-center card-header border-0">
-                    <h2 class="text-primary mb-0">View Product</h2>
+                    <h2 class="text-primary mb-0">View Products</h2>
                 </div>
                 <div class="table-responsive table-light">
               <table id="subcat" class="table align-items-center table-flush">
