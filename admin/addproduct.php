@@ -320,7 +320,7 @@ if(isset($_POST['submit'])) {
                     <p id="productcategory"></p>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Enter Product Name <span style="color:red">*</span></label>
-                        <input type="text" class="form-control productname" name="productname" pattern="(^([A-z]+\-[0-9]+)$)|(^([A-z])+$)"  class="productname" required placeholder="Add Product Name">
+                        <input type="text" class="form-control productname" name="productname"   class="productname" required placeholder="Add Product Name">
                     </div>
                       <p id="productname"></p>
                     
@@ -338,7 +338,8 @@ if(isset($_POST['submit'])) {
                     <br>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Enter Monthly Price <span style="color:red">*</span></label>
-                        <input type="number" class="form-control mpriceid" name="monthlyprice"  pattern="\d{1,15}"     required placeholder="ex. 23">
+                        <input type="number" class="form-control mpriceid" name="monthlyprice"  
+                        maxlength="15" pattern="\d{1,15}"     required placeholder="ex. 23">
                         <small>This would be monthly plan</small>
                     </div>
                     <p id="lablemprice"></p>
@@ -350,7 +351,7 @@ if(isset($_POST['submit'])) {
                     <p id="lableaprice"></p>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">SKU <span style="color:red">*</span></label>
-                        <input type="text" class="form-control sku" name="sku"   pattern="^[a-zA-Z0-9#](?:[a-zA-Z0-9_-]*[a-zA-Z0-9])?$" required placeholder="">
+                        <input type="text" class="form-control sku" name="sku"    required placeholder="">
                     </div>
                     <p id="sku"></p>
 
@@ -362,13 +363,13 @@ if(isset($_POST['submit'])) {
                     <br>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Web Spaces(in GB) <span style="color:red">*</span></label>
-                        <input type="text" class="form-control webid" name="webspaces"   pattern='([0-9]+(\.[0-9]+)?)'>
+                        <input type="text" class="form-control webid" name="webspaces"  >
                         <small>Enter 0.5 for 512 MB</small>
                     </div>
                     <p id="lableweb"></p>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Bandwidth (in GB) <span style="color:red">*</span></label>
-                        <input type="text" class="form-control bandid" name="bandwidth"   pattern="([0-9]+(\.[0-9]+)?)">
+                        <input type="text" class="form-control bandid" name="bandwidth"   >
                         <small>Enter 0.5 for 512 MB</small>
                     </div>
                     <p id="lableband"></p>

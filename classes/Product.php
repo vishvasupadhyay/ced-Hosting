@@ -117,6 +117,38 @@ class Product {
         }
     }
      }
+        function delete_product($id, $conn) {
+        $sql = mysqli_query($conn,"DELETE `tbl_product`, `tbl_product_description` FROM `tbl_product` INNER JOIN `tbl_product_description` ON `tbl_product`.`id` = `tbl_product_description`.`prod_id` WHERE `tbl_product`.`id` = '$id'");
+        if($sql == 1) {
+            echo "<script>alert('Product Deleted successfully');</script>";
+            echo "<script>window.location.href = 'viewproducts.php'; </script>";
+        } else {
+            echo "<script>alert('Some error occured!'); window.location.href = admin/viewproducts.php;</script>";
+        }
+    }
+
+    function selectproductwithid($id, $conn) {
+        $sql = mysqli_query($conn, "SELECT * FROM `tbl_product_description` INNER JOIN `tbl_product` ON tbl_product_description.prod_id = tbl_product.id WHERE `prod_id` = '$id'");
+        // print_r($sql);
+        // die();
+        $rows = mysqli_num_rows($sql);
+        if($rows>0) {
+            return $sql;
+        } else {
+            echo "<script>alert('Some error occured!'); window.location.href = admin/viewproducts.php;</script>";
+        }
+    }
+
+    function update_product1($id, $category, $productname, $pageurl, $monthlyprice, $annualprice, $sku, $featuresEncoded, $availablity, $conn) {
+        $sql=mysqli_query($conn, "UPDATE tbl_product_description INNER JOIN tbl_product ON tbl_product_description.prod_id = tbl_product.id SET tbl_product.prod_name = '$productname', tbl_product.prod_parent_id ='$category', tbl_product.html = '$pageurl', tbl_product.prod_available = '$availablity', tbl_product_description.description = '$featuresEncoded', tbl_product_description.mon_price ='$monthlyprice', tbl_product_description.annual_price = '$annualprice', tbl_product_description.sku = '$sku' WHERE tbl_product.id='$id'");
+        if($sql == 1) {
+            echo "<script>alert('Product Updated successfully');</script>";
+            echo "<script>window.location.href = 'viewproducts.php'; </script>";
+        } else {
+            echo "<script>alert('Some error occured!'); window.location.href = admin/editproduct.php?update=1&id=$id;</script>";
+        }
+    }
+
     function select_product1($id,$conn){
             $sql= "SELECT * FROM tbl_product Where id='".$id."'";
              $run = mysqli_query($conn, $sql);
@@ -128,7 +160,19 @@ class Product {
                 }
 
             }
-   
+
+            function cont_dyn($id,$conn){
+       
+            $sql="SELECT * FROM tbl_product
+            INNER JOIN tbl_product_description ON tbl_product.id = tbl_product_description.prod_id WHERE `prod_parent_id`='$id'";
+            $run = mysqli_query($conn, $sql);
+            $rows = mysqli_num_rows($run);
+            if($rows>0) {
+                return $run;
+            } else {
+                return '0';
+            }
+        }
 }
 
 ?>

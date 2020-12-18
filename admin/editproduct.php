@@ -1,5 +1,4 @@
 <?php 
-
 session_start();
 include('../classes/Product.php');
 if (!isset($_SESSION['id'])) {
@@ -12,12 +11,30 @@ if (!isset($_SESSION['id'])) {
 $product = new Product();
 $db = new Dbcon();
 if(isset($_POST['submit'])) {
-    $subcategory = $_POST['subcategory'];
-    $insert = $product->insert_subcategory($subcategory, $db->conn);
+    $id = $_POST['id'];
+    $category = $_POST['category'];
+    $productname = $_POST['productname'];
+    $pageurl = $_POST['pageurl'];
+    $availablity = $_POST['availability'];
+    $monthlyprice = $_POST['monthlyprice'];
+    $annualprice = $_POST['annualprice'];
+    $sku = $_POST['sku'];
+    $webspaces = $_POST['webspaces'];
+    $bandwidth = $_POST['bandwidth'];
+    $domain = $_POST['domain'];
+    $language = $_POST['language'];
+    $mailbox = $_POST['mailbox'];
+    $arr = array("webspaces"=>$webspaces, "bandwidth"=>$bandwidth, "domain"=>$domain, "language"=>$language, "mailbox"=>$mailbox);
+    $featuresEncoded = json_encode($arr);
+    $insert = $product->update_product1($id, $category, $productname, $pageurl, $monthlyprice, $annualprice, $sku, $featuresEncoded, $availablity, $db->conn);
 }
-if(isset($_GET['delete'])) {
+
+if(isset($_GET['update'])) {
   $id = $_GET['id'];
-  $delete = $product->delete_subcategory($id, $db->conn);
+  $sql = $product->selectproductwithid($id, $db->conn);
+  // foreach($sql as $item) {
+  //   echo $item['description']."<br>";
+  // } die();
 }
 ?>
   
@@ -224,7 +241,7 @@ if(isset($_GET['delete'])) {
                     <img alt="Image placeholder" src="assets/img/theme/team-4.jpg">
                   </span>
                   <div class="media-body  ml-2  d-none d-lg-block">
-                    <span class="mb-0 text-sm  font-weight-bold"><?php echo $_SESSION ['name']; ?></span>
+                    <span class="mb-0 text-sm  font-weight-bold"><?php echo "admin"; ?></span>
                   </div>
                 </div>
               </a>
@@ -266,12 +283,12 @@ if(isset($_GET['delete'])) {
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-              <h6 class="h2 text-white d-inline-block mb-0">Create Category</h6>
+              <h6 class="h2 text-white d-inline-block mb-0">Add Products</h6>
               <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                  <li class="breadcrumb-item"><a href="dashboard.php"><i class="fas fa-home"></i></a></li>
+                  <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
                   <li class="breadcrumb-item"><a href="#">Products</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Create Category</li>
+                  <li class="breadcrumb-item active" aria-current="page">Add Products</li>
                 </ol>
               </nav>
             </div>
@@ -289,118 +306,128 @@ if(isset($_GET['delete'])) {
         <div class="col-md-2 col-lg-2"></div>
         <div class="col-md-8 col-lg-8">
           <div class="card">
-            <div class="card-header bg-transparent text-center">
-              <h2 class="mb-0">Create Category</h2>
+            <div class="card-header bg-transparent">
+              <h1 class="mb-0">Update Product</h1>
             </div>
             <div class="card-body">
-                <form action="createcategory.php" method="post">
+                <form action="editproduct.php" method="post" id="basic-form">
+                <?php  
+                  if(isset($_GET['update'])) {
+                  $id = $_GET['id'];
+                  $sql = $product->selectproductwithid($id, $db->conn);
+                  foreach($sql as $data) {
+                    $decodedData = json_decode($data['description']);
+                ?>
+                    <input type="hidden" name="id" value="<?php echo $_GET['id'];?>">
                     <div class="form-group">
-                        <label for="exampleFormControlSelect1">Select Category</label>
-                        <select class="form-control" name="category" id="category">
+                        <label for="exampleFormControlSelect1">Select Category <span style="color:red">*</span></label>
+                        <select class="form-control select" name="category"  required>
+                            <option value="">Select Product Category</option>
                             <?php 
-                                $sql = $product->select_category($db->conn);
+                                $sql = $product->select_subcategory($db->conn);
                                 if($sql != 0) {
                                     foreach($sql as $item) {
                                         ?>
-                                            <option value="<?php echo $item['id'];?>"><?php echo $item['prod_name'];?></option>
+                                            <option value="<?php echo $item['id'];?>" <?php if($data['prod_parent_id'] == $item['id']) { echo "selected"; } ?>><?php echo $item['prod_name'];?></option>
                                         <?php
                                     }
                                 }
                             ?>
                         </select>
+                        <small id="productcategory"></small>
                     </div>
                     <div class="form-group">
-                        <label for="exampleFormControlInput1">Add SubCategory</label>
-                        <input type="text" class="form-control" name="subcategory" pattern='^([A-Za-z]+ )+[A-Za-z]+$|^[A-Za-z]+$' id="subcategory" required placeholder="Add SubCategory">
+                        <label for="exampleFormControlInput1">Enter Product Name <span style="color:red">*</span></label>
+                        <input type="text" class="form-control productname"  name="productname" pattern='^([A-Za-z]+ )+[A-Za-z-0-9]+$|^[A-Za-z0-9]+$' required placeholder="Add Product Name" value="<?php echo $data['prod_name']; ?>">
+                        <small id="productnameError"></small>
+                    </div>
+                    <p id="productname"></p>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Page Url <span style="color:red">*</span></label>
+                        <input type="url" class="form-control" id="pageurl"  name="pageurl" placeholder="Add Page Url"  value="<?php echo $data['html']; ?>">
+                        <small id="pageurlError"></small>
+                    </div>
+
+                    <hr>
+
+                    <div class="card-header bg-transparent">
+                        <h2 class="mb-0">Product Description</h2>
+                        <p>Enter Product Description Below</p>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Enter Monthly Price <span style="color:red">*</span></label>
+                        <input type="text" class="form-control mpriceid"  name="monthlyprice" required placeholder="ex. 23" value="<?php echo $data['mon_price']; ?>">
+                        <small>This would be monthly plan</small><br>
+                        <small id="lablemprice"></small>
                     </div>
                     <div class="form-group">
-                        <input type="submit" class="btn btn-primary" value="Add Category" name="submit">
+                        <label for="exampleFormControlInput1">Enter Annual Price <span style="color:red">*</span></label>
+                        <input type="text" class="form-control apriceid"  name="annualprice" required placeholder="ex. 23" value="<?php echo $data['annual_price']; ?>">
+                        <small>This would be Annual plan</small><br>
+                        <small id="lableaprice"></small>
                     </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">SKU <span style="color:red">*</span></label>
+                        <input type="text" class="form-control sku"  name="sku" required placeholder="" value="<?php echo $data['sku']; ?>">
+                        <small id="sku"></small>
+                    </div>
+
+                    <hr>
+
+                    <div class="card-header bg-transparent">
+                        <h2 class="mb-0">Features</h2>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Web Spaces(in GB) <span style="color:red">*</span></label>
+                        <input type="text" class="form-control webid"  name="webspaces" required value="<?php echo $decodedData->webspaces; ?>">
+                        <small>Enter 0.5 for 512 MB</small><br>
+                        <small id="lableweb"></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Bandwidth (in GB) <span style="color:red">*</span></label>
+                        <input type="text" class="form-control bandid"  name="bandwidth" required value="<?php echo $decodedData->bandwidth; ?>">
+                        <small>Enter 0.5 for 512 MB</small><br>
+                        <small id="lableband"></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Free Domain <span style="color:red">*</span></label>
+                        <input type="text" class="form-control domainid"  id="profree"  name="domain" required value="<?php echo $decodedData->domain; ?>">
+                        <small>Enter 0 if no domain available in this service</small><br>
+                        <small id="prodfree"></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Language/Technology Supporty <span style="color:red">*</span></label>
+                        <input type="text"class="form-control prolang" name="language" id="prolang" required value="<?php echo $decodedData->language; ?>">
+                        <small>Separate by (,) Ex: PHP, MySQL, MongoDB</small><br>
+                        <small id="prodlang"></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Mailbox <span style="color:red">*</span></label>
+                        <input type="text" class="form-control promail" id="promail"  name="mailbox" required value="<?php echo $decodedData->mailbox; ?>">
+                        <small>Enter Number of mailbox will be provided, enter 0 if none</small><br>
+                        <small  id="prodmail"></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Select Category <span style="color:red">*</span></label>
+                        <select class="form-control" name="availability" id="availability" onblur ="forminputs(this.id)" required>
+                            <option value="">Select Product Category</option>
+                            <option value="0" <?php if($data['prod_available'] == '1') { echo "selected"; } ?>>Available</option>
+                            <option value="1" <?php if($data['prod_available'] == '0') { echo "selected"; } ?>>Unavailable</option>
+                        </select>
+                        <small id="categoryError"></small>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" id="submit" class="btn btn-primary" value="Update Product" name="submit">
+                    </div>
+                    <?php } 
+                  }?>
                 </form>
             </div>
           </div>
         </div>
         <div class="col-md-2 col-lg-2"></div>
       </div>
-      <!-- SubCategory Table -->
-      <div class="row">
-        <div class="col">
-            <div class="card bg-default shadow">
-                <div class="text-center card-header bg-primary border-0"><span  style="color: black;font-size: 26px;"><b>View Category</b></span>
-                    <!-- <h3 class="text-white mb-0">All SubCategory</h3> -->
-                </div>
-                <div class="table-responsive table-light">
-              <table id="subcat" class="table align-items-center table-flush">
-                <thead class="text-dark">
-                  <tr>
-                    <th scope="col" class="sort" data-sort="name">Category</th>
-                    <th scope="col" class="sort" data-sort="budget">SubCategory</th>
-                    <!-- <th scope="col" class="sort" data-sort="status">Status</th> -->
-                    <th scope="col" class="sort" data-sort="completion">Launch Date</th>
-                    <th scope="col" class="sort" data-sort="completion">Action</th>
-                  </tr>
-                </thead>
-                <tbody class="list">
-                  <?php
-                    $data = $product->select_subcategory($db->conn);
-                    if($data == '0') {
-                        ?>
-                            <tr>
-                                <td class="text-center">No data Available</td>
-                            </tr>
-                        <?php
-                    } else {
-                        foreach($data as $item) {
-                            $parentname = $product->select_parentname($item['prod_parent_id'], $db->conn);
-                            ?>
-                                <tr>
-                                    <td>
-                                        <?php
-                                            if($parentname == '0') {
-                                                echo "Null";
-                                            } else {
-                                                foreach($parentname as $pname) {
-                                                    echo $pname['prod_name'];
-                                                } 
-                                            }
-                                        ?>
-                                    </td>
-                                             <td><?php echo $item['prod_name']; ?></td>
-                                   
-                                    <td><?php echo $item['prod_launch_date']; ?></td>
-                                    <td>
-                                      <a onclick='return confirm("Are you sure, you want to Edit?")'  href="editcategory.php?update=1&id=<?php echo $item['id']; ?>" class="btn btn-info btn-sm">Edit</a>
-                                      <a onclick='return confirm("Are you sure, you want to Delete?")'  href="createcategory.php?delete=1&id=<?php echo $item['id']; ?>" class="btn btn-danger btn-sm">Delete</a>
-                                    </td>
-                                </tr>
-                            <?php
-                        }
-                    }
 
-                  ?>
-                </tbody>
-              </table>
-            </div>
-            </div>
-        </div>
-    </div>
-     <script>
-      function changeStatus($id) {
-        $.ajax({
-        method : "POST",
-        url : "ajax.php",
-        data : {id : $id }
-      }).done(function(result){
-        console.log(result);
-      });
-      }
-     </script>
-<?php include_once('footer.php');?>
-<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
-  <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
-<script>
-  $(function(){
-    $('#subcat').dataTable()
-  })
-  </script>   
-
+<?php include_once('footer.php');?>  

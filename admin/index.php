@@ -210,7 +210,7 @@ include_once('header.php');?>
                     <img alt="Image placeholder" src="assets/img/theme/team-4.jpg">
                   </span>
                   <div class="media-body  ml-2  d-none d-lg-block">
-                    <span class="mb-0 text-sm  font-weight-bold"><?php echo 'admin';?></span>
+                    <span class="mb-0 text-sm  font-weight-bold"><?php echo $_SESSION['name'];?></span>
                   </div>
                 </div>
               </a>

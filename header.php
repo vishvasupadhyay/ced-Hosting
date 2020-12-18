@@ -115,10 +115,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										?> 
                                     </ul>
                                 </li>
-                                <li <?php if($link == "pricing.php") { echo 'class="active"'; }?>><a href="pricing.php">Pricing</a></li>
+                                <li <?php if($link == "#") { echo 'class="active"'; }?>><a href="#">Pricing</a></li>
                                 <li <?php if($link == "blog.php") { echo 'class="active"'; }?>><a href="blog.php">Blog</a></li>
                                 <li <?php if($link == "contact.php") { echo 'class="active"'; }?>><a href="contact.php">Contact</a></li>
-                                <li <?php if($link == "cart.php") { echo 'class="active"'; }?>><a href="blog.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a></li>
+                                <li <?php if($link == "cart.php") { echo 'class="active"'; }?>><a href="cart
+								.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a></li>
 								<?php if(isset($_SESSION['id'])){ ?>
 										<li <?php if($link == "logout.php") { echo 'class="active"'; }?>><a href="logout.php">Logout</a></li>
 								<?php ; } else  {?>

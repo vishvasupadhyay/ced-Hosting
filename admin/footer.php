@@ -23,7 +23,7 @@
             </ul>
           </div>
         </div>
-      </footer>
+</footer>
     </div>
   </div>
   <!-- Argon Scripts -->
@@ -63,7 +63,7 @@ $(".productname").focusout(function() {
         $("#productname").show();
         $("#submit10").attr("disabled",true)
         $(this).css('border', 'solid 3px red');
-    } else if (!$productname.match(/^[a-zA-Z0-9]+( [a-zA-Z0-9]+)*$/)) {
+    } else if (!$productname.match(/^[a-zA-Z0-9-]+( [a-zA-Z0-9]+)*$/)) {
         $("#productname").html("*Product Name can be alpha-numeric/only alphabetic and one space between words allowed");
         $("#productname").show();
         $("#submit10").attr("disabled",true)
@@ -92,8 +92,8 @@ $(".mpriceid").focusout(function() {
         $("#lablemprice").show();
         $("#submit10").attr("disabled",true)
         $(this).css('border', 'solid 3px red');
-    } else if (!$mprice.match(/^[0-9]\d*(\.\d+)?$/)) {
-        $("#lablemprice").html("*Price can be only integer and only one dot(.) allowed");
+    } else if (!$mprice.match(/^[0-9]\d{0,14}(\.\d+)?$/)) {
+        $("#lablemprice").html("*Price can be only integer and only one dot(.) allowed and max length 15");
         $("#lablemprice").show();
         $("#submit10").attr("disabled",true)
         $(this).css('border', 'solid 3px red');
@@ -120,8 +120,8 @@ $(".apriceid").focusout(function() {
         $("#lableaprice").show();
         $("#submit10").attr("disabled",true)
         $(this).css('border', 'solid 3px red');
-    } else if (!$aprice.match(/^[0-9]\d*(\.\d+)?$/)) {
-        $("#lableaprice").html("*Price can be only integer and only one dot(.) allowed");
+    } else if (!$aprice.match(/^[0-9]\d{0,14}(\.\d+)?$/)) {
+        $("#lableaprice").html("*Price can be only integer and only one dot(.) allowed and max length 15");
         $("#lableaprice").show();
         $("#submit10").attr("disabled",true)
         $(this).css('border', 'solid 3px red');
@@ -166,7 +166,7 @@ $(".webid").focusout(function() {
         $("#lableweb").show();
         $("#submit10").attr("disabled",true)
         $(this).css('border', 'solid 3px red');
-    } else if (!$web.match(/^[0-9]\d*(\.\d+)?$/)) {
+    } else if (!$web.match(/^\d{1,14}(\.\d+)?$/)) {
         $("#lableweb").html("*Web Space can be only integer and only one dot(.) allowed");
         $("#lableweb").show();
         $("#submit10").attr("disabled",true)
@@ -195,7 +195,7 @@ $(".bandid").focusout(function() {
         $("#lableband").show();
         $("#submit10").attr("disabled",true);
         $(this).css('border', 'solid 3px red');
-    } else if (!$band.match(/^[0-9]\d*(\.\d+)?$/)) {
+    } else if (!$band.match(/^\d{1,14}(\.\d+)?$/)) {
         $("#lableband").html("*Bandwidth can be only integer and only one dot(.) allowed");
         $("#lableband").show();
         $("#submit10").attr("disabled",true);
@@ -268,7 +268,7 @@ $("#submit10").attr("disabled",true);
 $(this).css('border', 'solid 3px red');
 count8=0;
 }
-else if(!$prolang.match(/^[a-zA-Z ,]+[a-zA-Z]+$/))
+else if(!$prolang.match("^[a-zA-Z0-9]*[a-zA-Z]+[0-9]*(,?([a-zA-Z0-9]*[a-zA-Z]+[0-9]*)+)*$"))
 {
 $("#prodlang").html("*Select Valid language");
 $("#prodlang").show();

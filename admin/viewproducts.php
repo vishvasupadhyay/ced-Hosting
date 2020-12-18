@@ -266,12 +266,12 @@ if(isset($_GET['delete'])) {
         <div class="header-body">
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
-              <h6 class="h2 text-white d-inline-block mb-0">Create Category</h6>
+              <h6 class="h2 text-white d-inline-block mb-0">View Products</h6>
               <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                   <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
                   <li class="breadcrumb-item"><a href="#">Products</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Create Category</li>
+                  <li class="breadcrumb-item active" aria-current="page">View Products</li>
                 </ol>
               </nav>
             </div>
@@ -345,7 +345,7 @@ if(isset($_GET['delete'])) {
                                         <td><?php echo $data->language; ?></td>
                                         <td><?php echo $data->mailbox; ?></td>
                                         <td>
-                                        <a onclick='return confirm("Are you sure, you want to Edit?")'  href="editcategory.php?update=1&id=<?php echo $item['id']; ?>" class="btn btn-success btn-sm">Edit</a>
+                                        <a onclick='return confirm("Are you sure, you want to Edit?")'  href="editproduct.php?update=1&id=<?php echo $pro['id']; ?>" class="btn btn-success btn-sm">Edit</a>
                                         <a onclick='return confirm("Are you sure, you want to Delete?")'  href="viewproducts.php?delete=1&id=<?php echo $pro['prod_id']; ?>" class="btn btn-danger btn-sm">Delete</a>
                                         </td>
                                     </tr>
